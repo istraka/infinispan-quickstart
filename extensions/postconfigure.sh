@@ -13,9 +13,8 @@ then
     err="true";
 fi
 
-if [ "$err" == "true" ];
+if [ "$err" != "true" ];
 then
-    exit -1;
+    $JBOSS_HOME/bin/jboss-cli.sh --file=$JBOSS_HOME/extensions/offload-session-cache-to-rhdg.cli;
 fi
 
-#$JBOSS_HOME/bin/jboss-cli.sh --file=$JBOSS_HOME/extensions/offload-session-cache-to-rhdg.cli
