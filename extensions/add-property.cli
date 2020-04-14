@@ -1,0 +1,17 @@
+embed-server --std-out=echo  --server-config=standalone-openshift.xml
+:whoami
+/subsystem=jgroups/channel=ee:write-attribute(name=stack,value=tcp)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-jdg-server1:add(host=localhost, port=11222)
+batch
+/subsystem=infinispan/remote-cache-container=web-sessions:add(default-remote-cluster=jdg-server-cluster)
+/subsystem=infinispan/remote-cache-container=web-sessions/remote-cluster=jdg-server-cluster:add(socket-bindings=[remote-jdg-server1])
+run-batch
+batch
+/subsystem=infinispan/remote-cache-container=session_data_cc:add(default-remote-cluster=jdg-server-cluster, module=org.wildfly.clustering.web.hotrod)
+/subsystem=infinispan/remote-cache-container=session_data_cc/remote-cluster=jdg-server-cluster:add(socket-bindings=[remote-jdg-server1])
+run-batch
+/subsystem=distributable-web/hotrod-session-management=sm_hotrod:add(remote-cache-container=session_data_cc, granularity=ATTRIBUTE)
+/subsystem=distributable-web/hotrod-session-management=sm_hotrod/affinity=local:add()
+/subsystem=distributable-web:write-attribute(name=default-session-management,value=sm_hotrod)
+
+
