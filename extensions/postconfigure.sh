@@ -4,13 +4,18 @@ echo "Executing postconfigure.sh"
 err="false"
 if [ -z "$JDG_HOST" ];
 then
-    echo "JDG_HOST not set"
-    err="true"
+    echo "JDG_HOST not set";
+    err="true";
 fi
 if [ -z "$JDG_PORT" ];
 then
-    echo "JDG_PORT not set"
-    err="true"
+    echo "JDG_PORT not set";
+    err="true";
+fi
+
+if [ "$err" == "true" ];
+then
+    exit -1;
 fi
 
 #$JBOSS_HOME/bin/jboss-cli.sh --file=$JBOSS_HOME/extensions/offload-session-cache-to-rhdg.cli
