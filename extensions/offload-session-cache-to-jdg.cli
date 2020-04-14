@@ -1,7 +1,7 @@
 embed-server --std-out=echo  --server-config=standalone-openshift.xml
 :whoami
 /subsystem=jgroups/channel=ee:write-attribute(name=stack,value=tcp)
-/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-jdg-server:add(host=${JDG_HOST}, port=${JDG_PORT})
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-jdg-server:add(host=${env.JDG_HOST}, port=${env.JDG_PORT})
 batch
 /subsystem=infinispan/remote-cache-container=session_data_cc:add(default-remote-cluster=jdg-server-cluster, module=org.wildfly.clustering.web.hotrod)
 /subsystem=infinispan/remote-cache-container=session_data_cc/remote-cluster=jdg-server-cluster:add(socket-bindings=[remote-jdg-server])
