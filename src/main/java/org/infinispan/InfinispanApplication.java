@@ -14,6 +14,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.util.Properties;
 
 @ApplicationPath("/")
 public class InfinispanApplication extends Application {
@@ -48,15 +49,17 @@ public class InfinispanApplication extends Application {
         }
 
         @GET
-        @Produces(MediaType.TEXT_PLAIN)
-        public String doGET(@Context HttpServletRequest req) {
+        @Produces(MediaType.APPLICATION_JSON)
+        public Properties doGET(@Context HttpServletRequest req) {
             HttpSession session = req.getSession(false);
 
             if (session != null) {
-                return (String) session.getAttribute(KEY);
+                Properties properties = new Properties();
+                properties.setProperty("value", (String) session.getAttribute(KEY));
+                return properties;
             } else {
                 log.info("session does not exists");
-                return "null";
+                return new Properties();
             }
         }
     }
