@@ -26,7 +26,7 @@ public class InfinispanApplication extends Application {
         public static final String KEY = WebResource.class.getName();
 
         @PUT
-        public void doPUT(@Context HttpServletRequest req, @QueryParam("value") int value) {
+        public void doPUT(@Context HttpServletRequest req, @QueryParam("value") String value) {
             HttpSession session = req.getSession(true);
 
             if (session.isNew()) {
