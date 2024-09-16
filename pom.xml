@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-client-hotrod</artifactId>
-            <version>10.1.5.Final</version>
+            <version>14.0.25.Final</version>
         </dependency>
 
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss EAP -->
